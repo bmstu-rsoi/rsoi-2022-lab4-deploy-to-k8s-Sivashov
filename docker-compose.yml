@@ -23,7 +23,7 @@ services:
       - ./db-v1.sql:/docker-entrypoint-initdb.d/db-v1.sql
   
   gateway:
-    image: gateway
+    image: sivashov/gateway
     restart: on-failure
     build: src/gateway
     ports:
@@ -34,7 +34,7 @@ services:
       - privilegies
 
   tickets:
-    image: tickets
+    image: sivashov/tickets
     restart: on-failure
     build: src/tickets
     ports:
@@ -45,7 +45,7 @@ services:
       - postgres
 
   flights:
-    image: flights
+    image: sivashov/flights
     restart: on-failure
     build: src/flights
     ports:
@@ -57,7 +57,7 @@ services:
 
 
   privilegies:
-    image: privilegies
+    image: sivashov/privilegies
     restart: on-failure
     build: src/privileges
     ports:
