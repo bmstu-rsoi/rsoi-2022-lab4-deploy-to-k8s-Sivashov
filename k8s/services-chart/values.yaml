@@ -2,7 +2,7 @@ privilegies:
   service:
     port: 8050
     image:
-      name: sivashov/privilegies-service
+      name: sivashov/privilegies
       version: "1.1"
     database:
       name: postgres
@@ -11,7 +11,7 @@ flights:
   service:
     port: 8060
     image:
-      name: sivashov/flights-service
+      name: sivashov/flights
       version: "1.1"
     database: 
       name: postgres
@@ -20,7 +20,7 @@ tickets:
   service:
     port: 8070
     image:
-      name: sivashov/tickets-service
+      name: sivashov/tickets
       version: "1.1"
     database: 
       name: postgres
@@ -29,6 +29,6 @@ gateway:
   service:
     port: 8080
     image:
-      name: sivashov/gateway-service
+      name: sivashov/gateway
       version: "1.1"
     isGateway: true
