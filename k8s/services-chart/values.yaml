@@ -11,7 +11,7 @@ flights:
   service:
     port: 8060
     image:
-      name: sivashov/flight
+      name: sivashov/flights
       version: "latest"
     database: 
       name: postgres
@@ -20,7 +20,7 @@ tickets:
   service:
     port: 8070
     image:
-      name: sivashov/ticket
+      name: sivashov/tickets
       version: "latest"
     database: 
       name: postgres
