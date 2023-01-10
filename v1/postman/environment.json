@@ -4,7 +4,7 @@
 	"values": [
 		{
 			"key": "baseUrl",
-			"value": "https://gateway-sivashov.cloud.okteto.net",
+			"value": "http://gateway.sivashov.cloud.okteto.net",
 			"enabled": true
 		}
 	],
