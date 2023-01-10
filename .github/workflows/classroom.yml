@@ -32,10 +32,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build and publish images
-        timeout-minutes: 15
-        run: |
-          ./scripts/build-images.sh
+      - name: Build images
+        timeout-minutes: 10
+        run: docker compose build
+        
       - name: Deploy
         run: |
           echo "run deploy"
