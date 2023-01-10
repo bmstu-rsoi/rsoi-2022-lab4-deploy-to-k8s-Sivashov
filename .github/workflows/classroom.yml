@@ -39,9 +39,9 @@ jobs:
       - name: Deploy
         run: |
           echo "run deploy"
-          echo kubectl config set-cluster rsoi-flights-service-cluster --server="KUBE_HOST" --insecure-skip-tls-verify=true
+          echo kubectl config set-cluster rsoi-flights-service-cluster --server="$KUBE_HOST" --insecure-skip-tls-verify=true
           kubectl config set-cluster rsoi-flights-service-cluster --server="$KUBE_HOST" --insecure-skip-tls-verify=true
-          echo kubectl config set-credentials cloud_okteto_com-user --token=KUBE_TOKEN
+          echo kubectl config set-credentials cloud_okteto_com-user --token="$KUBE_TOKEN"
           kubectl config set-credentials cloud_okteto_com-user --token="$KUBE_TOKEN"
           echo kubectl config set-context default --cluster=rsoi-flights-service-cluster --user=cloud_okteto_com-user --namespace=\"sivashov\"
           kubectl config set-context default --cluster=rsoi-flights-service-cluster --user=cloud_okteto_com-user --namespace="sivashov"
