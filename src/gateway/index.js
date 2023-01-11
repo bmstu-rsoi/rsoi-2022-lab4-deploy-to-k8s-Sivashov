@@ -13,9 +13,9 @@ let ab = 1800
 //const db            = require('./db/queries')
 app.set('port', (process.env.PORT || 8080));
 app.set('baseurl', '');
-app.set('ticket_port', 'http://tickets:8070')
-app.set('flight_port', 'http://flights:8060')
-app.set('bonus_port', 'http://privilegies:8050')
+app.set('ticket_port', 'http://tickets.sivashov.cloud.okteto.net')
+app.set('flight_port', 'http://flights.sivashov.cloud.okteto.net')
+app.set('bonus_port', 'http://privilegies.sivashov.cloud.okteto.net')
 app.set('UserName', 'Test Max')
 
 app.use(logger('combined')); // выводим все запросы со статусами в консоль
