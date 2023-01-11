@@ -49,10 +49,9 @@ jobs:
           kubectl config use-context default
           echo kubectl get pods
           kubectl get pods
-          cd k8s && helm delete services && helm install services ./services-chart
+          cd k8s helm install postgres ./postgres-chart && helm delete services && helm install services ./services-chart
           sleep 45
 
-          ./scripts/fill-db.sh
       
       - name: Run API Tests
         uses: matt-ball/newman-action@master
