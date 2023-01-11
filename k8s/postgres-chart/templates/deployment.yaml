@@ -48,8 +48,8 @@ spec:
               mountPath: /var/lib/postgresql/data
             - name: postgres-config-map
               mountPath: /docker-entrypoint-initdb.d/
-            - name: ./db-v1.sql
-              mountPath: /docker-entrypoint-initdb.d/db-v1.sql
+            #- name: ./db-v1.sql
+            #  mountPath: /docker-entrypoint-initdb.d/db-v1.sql
       volumes:
         - name: db-data
         - name: postgres-config-map
