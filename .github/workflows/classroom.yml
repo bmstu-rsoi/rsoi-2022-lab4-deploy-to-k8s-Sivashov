@@ -50,7 +50,10 @@ jobs:
           echo kubectl get pods
           kubectl get pods
           cd k8s && helm delete services && helm install services ./services-chart
-          sleep 45  
+          sleep 45
+          postgresPod=$(kubectl get pods -l app=postgres -o=jsonpath='{.items[].metadata}' | jq -r '.name')
+
+          ./scripts/build-images.sh
       
       - name: Run API Tests
         uses: matt-ball/newman-action@master
