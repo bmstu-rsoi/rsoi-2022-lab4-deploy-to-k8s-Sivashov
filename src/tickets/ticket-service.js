@@ -21,7 +21,7 @@ const pg = require('pg');
 const tickets_db = new pg.Client({
     user: 'postgres',
     //host: 'postgres',
-    host: 'postgres',
+    host: 'postgres-service',
     database: 'postgres',
     password: 'postgres',
     port: 5432,
