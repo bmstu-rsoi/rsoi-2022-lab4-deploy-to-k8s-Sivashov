@@ -9,8 +9,7 @@ var errorHandler    = require('errorhandler');
 //var log             = require('./libs/log')(module);
 var url             = require('url')
 const axios = require('axios');
-const CircuitBreaker = require('./my_circuit_breaker.js')
-
+let ab = 1800
 //const db            = require('./db/queries')
 app.set('port', (process.env.PORT || 8080));
 app.set('baseurl', '');
@@ -23,35 +22,8 @@ app.use(logger('combined')); // выводим все запросы со ста
 app.use(bodyParser.json()); // стандартный модуль, для парсинга JSON в запросах
 app.use(methodOverride()); // поддержка put и delete
 
-let ab = 1800
-const options = {
-  failureThreshold: 3,
-  successThreshold: 2,
-  timeout: 100
-}
-
-function fallbackRes() {
-  return { data: "Bonus Service unavailable" }
-}
-
-function unstableRequest() {
-  //return axios.get('http://localhost:8050/manage/health')
-  return axios.get('http://privilegies:8050/manage/health')
-}
-
-const breaker = new CircuitBreaker(unstableRequest, {
-  fallback: fallbackRes,
-  failureThreshold: 1
-  // ...etc
-})
 
 
-/*setInterval(() => {
-  breaker
-    .fire()
-    .then(console.log)
-    .catch(console.error)
-}, 1000)*/
 
 app.get('/api/v1/flights', function (req, res) {
   const page = req.params.page;
@@ -189,26 +161,18 @@ app.get('/api/v1/me', async function (req, res) {
     status: "PAID"
    }
   
-  let breaker_info = breaker.fire()
-  console.log(await breaker_info)
-  if ((await breaker_info).status === 200) {
-    console.log("Good")
-    const bonuses = await getBonuses()
-    if (bonuses.data) {
-      console.log(bonuses.data)
-    }
 
-    if (tickets_data.data && (await bonuses).data)
-    {
-      res.status(200).json({tickets: [dat1, dat2], privilege: {balance: 1800, status: bonuses.data[0].status}})
-    }
-    else {
-      res.status(400).json(null)
-    }
+  const bonuses = await getBonuses()
+  if (bonuses.data) {
+    console.log(bonuses.data)
+  }
+
+  if (tickets_data.data && (await bonuses).data)
+  {
+    res.status(200).json({tickets: [dat1, dat2], privilege: {balance: 1800, status: bonuses.data[0].status}})
   }
   else {
-    res.status(200).json({tickets: [dat1, dat2], privilege: {}})
-    return;
+    res.status(400).json(null)
   }
 
   
@@ -216,20 +180,7 @@ app.get('/api/v1/me', async function (req, res) {
 
 app.get('/api/v1/privilege', async function (req, res) {
 
-  //let breaker_info = breaker.fire().then(console.log).catch(console.error)
-  //let breaker_info = breaker.fire().catch((error) => {return error.data})
-  let breaker_info = breaker.fire()
-  console.log(await breaker_info)
-  if ((await breaker_info).status === 200) {
-    console.log("Good")
-    //res.status(200).json(null)
-  }
-  else {
-    //console.log((await breaker_info).data)
-    res.status(503).setHeader('Content-Type', 'application/json').json({message: 'Bonus Service unavailable'});
-    return;
-  }
-  
+
   
   const bonus_data = await getBonuses()
   console.log("Bonuses: ", bonus_data.data)
@@ -377,17 +328,6 @@ app.post('/api/v1/tickets', async function (req, res) {
     res_paid_bal = price
   }
 
-  let breaker_info = breaker.fire()
-  console.log(await breaker_info)
-  if ((await breaker_info).status === 200) {
-    console.log("Good")
-    //res.status(200).json(null)
-  }
-  else {
-    //console.log((await breaker_info).data)
-    res.status(503).setHeader('Content-Type', 'application/json').json({message: 'Bonus Service unavailable'});
-    return;
-  }
 
   const bonus = await getBonuses()
   console.log(bonus.data)
